@@ -41,7 +41,7 @@
     </header>
 
     <!-- Container Principal -->
-    <div class="content-wrapper d-flex flex-grow-1 overflow-hidden">
+    <div class="content-wrapper d-flex flex-grow-1 overflow-auto">
 
       <!-- Sidebar -->
       <aside
