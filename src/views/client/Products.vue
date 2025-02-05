@@ -15,9 +15,9 @@
                 </span>
               </p>
               <p class="card-text price"><strong>{{ product.price }}</strong></p>
-              <Button @click="cartStore.addToCart(product)" class="btn primary">
+              <button @click="addToCart(product)" class="btn primary">
                 Adicionar ao carrinho
-              </Button>
+              </button>
             </div>
           </div>
         </div>
@@ -43,8 +43,8 @@
 import { ref, computed, onMounted } from 'vue'
 import { useProductStore } from '@/stores/productStore'
 import { useCartStore } from '@/stores/cartStore'
+import type { Product } from '@/stores/productStore'
 import ClientLayout from '@/layouts/ClientLayout.vue'
-import Button from '@/components/common/Button.vue'
 
 const productStore = useProductStore()
 const cartStore = useCartStore()
@@ -89,6 +89,10 @@ const nextPage = () => {
 
 const goToPage = (page: number) => {
   currentPage.value = page
+}
+
+const addToCart = (product: Product) => {
+  cartStore.addToCart(product)
 }
 
 onMounted(() => {

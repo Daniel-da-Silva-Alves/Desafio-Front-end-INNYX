@@ -90,7 +90,7 @@
     <!-- Footer Fixo -->
     <footer class="footer mt-auto py-3 bg-light border-top">
       <div class="container-fluid text-center">
-        <span class="text-muted">© 2025 Inny Store. Todos os direitos reservados.</span>
+        <span class="text-muted">© 2025 Innyx Store. Todos os direitos reservados.</span>
       </div>
     </footer>
 
