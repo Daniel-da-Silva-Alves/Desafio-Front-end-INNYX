@@ -1,25 +1,29 @@
 <template>
-  <div class="products-client">
-    <h2>Our Products</h2>
-    
-    <div class="products-grid" v-if="productStore.products.length">
-      <div v-for="product in productStore.products" :key="product.id" class="product-card">
-        <h3>{{ product.name }}</h3>
-        <p class="price">${{ product.price }}</p>
-        <p class="description">{{ product.description }}</p>
-        <button @click="cartStore.addToCart(product)" class="btn primary">
-          Add to Cart
-        </button>
+  <client-layout>
+    <div class="products-client">
+      <h2>Our Products</h2>
+      
+      <div class="products-grid" v-if="productStore.products.length">
+        <div v-for="product in productStore.products" :key="product.id" class="product-card">
+          <h3>{{ product.name }}</h3>
+          <p class="price">${{ product.price }}</p>
+          <p class="description">{{ product.description }}</p>
+          <button @click="cartStore.addToCart(product)" class="btn primary">
+            Add to Cart
+          </button>
+        </div>
       </div>
+      <p v-else>No products available.</p>
     </div>
-    <p v-else>No products available.</p>
-  </div>
+  </client-layout>
+
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useProductStore } from '@/stores/productStore'
 import { useCartStore } from '@/stores/cartStore'
+import ClientLayout from '@/layouts/ClientLayout.vue'
 
 const productStore = useProductStore()
 const cartStore = useCartStore()

@@ -1,14 +1,20 @@
 <template>
-  <div class="home">
-    <h1>Welcome to Our Store</h1>
-    <router-link to="/products" class="cta-button">
-      Browse Products
-    </router-link>
-  </div>
+  <client-layout>
+    <div class="home">
+      <h1>Bem-vindo(a) à Innyx Store!</h1>
+      <p>Clique no botão a baixo para ver o nosso catálogo</p>
+      <router-link to="/products">
+        <Button class="cta-button">
+          Ver Catálogo
+        </Button>
+      </router-link>
+    </div>
+  </client-layout>
 </template>
 
 <script setup lang="ts">
-// Home page logic here
+import ClientLayout from '@/layouts/ClientLayout.vue'
+import Button from '@/components/common/Button.vue'
 </script>
 
 <style lang="scss" scoped>

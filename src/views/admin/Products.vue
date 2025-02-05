@@ -1,9 +1,9 @@
 <template>
   <admin-layout>
     <div class="products-admin">
-      <h2>Products Management</h2>
+      <h2>Gestão de Produtos</h2>
       <router-link to="/admin/products/add" class="btn primary">
-        Add New Product
+        Novo Produto
       </router-link>
       
       <div class="products-list" v-if="productStore.products.length">
@@ -12,12 +12,12 @@
           <p>{{ product.price }}</p>
           <div class="actions">
             <router-link :to="`/admin/products/edit/${product.id}`" class="btn secondary">
-              Edit
+              Editar Produto
             </router-link>
           </div>
         </div>
       </div>
-      <p v-else>No products found.</p>
+      <p v-else>Nenhum produto encontrado.</p>
     </div>
   </admin-layout>
 </template>
