@@ -78,7 +78,7 @@
       <!-- Footer -->
       <footer class="footer py-3 bg-light border-top">
         <div class="container text-center">
-          <span class="text-muted">© 2025 INNYX Store. Todos os direitos reservados.</span>
+          <span class="text-muted">© 2025 Innyx Store. Todos os direitos reservados.</span>
         </div>
       </footer>
     </div>

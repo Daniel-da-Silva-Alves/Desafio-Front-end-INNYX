@@ -1,7 +1,7 @@
 <template>
   <client-layout>
     <div class="products-client">
-      <h2 class="catalog-header">Catálogo</h2>
+      <h2 class="catalog-header">Produtos Innyx</h2>
       <div class="products-grid">
         <div v-for="product in paginatedProducts" :key="product.id" class="product-card">
           <div class="card">
