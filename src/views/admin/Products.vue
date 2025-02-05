@@ -30,7 +30,7 @@ import AdminLayout from '@/layouts/AdminLayout.vue'
 const productStore = useProductStore()
 
 onMounted(() => {
-  productStore.fetchProducts()
+  productStore.getProducts()
 })
 </script>
 

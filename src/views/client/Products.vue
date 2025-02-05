@@ -16,7 +16,6 @@
       <p v-else>No products available.</p>
     </div>
   </client-layout>
-
 </template>
 
 <script setup lang="ts">
@@ -29,7 +28,7 @@ const productStore = useProductStore()
 const cartStore = useCartStore()
 
 onMounted(() => {
-  productStore.fetchProducts()
+  productStore.getProducts()
 })
 </script>
 
