@@ -72,7 +72,7 @@ const productStore = useProductStore()
 
 const product = ref({
   name: '',
-  price: '', // Alterado para string
+  price: 0, // Alterado para number
   description: '',
   image: ''
 })
@@ -85,7 +85,7 @@ const formatPrice = (event: Event) => {
   let value = input.value.replace(/\D/g, '')
   value = (parseInt(value) / 100).toFixed(2)
   formattedPrice.value = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(parseFloat(value))
-  product.value.price = formattedPrice.value // Armazena o valor formatado como moeda
+  product.value.price = parseFloat(value) // Armazena o valor como número
 }
 
 const handleFileChange = (event: Event) => {

@@ -14,7 +14,7 @@ export const useCartStore = defineStore('cart', () => {
   
   // Computed property para calcular o total do carrinho
   const total = computed(() => {
-    return items.value.reduce((sum, item) => sum + parseFloat(item.price) * item.quantity, 0)
+    return items.value.reduce((sum, item) => sum + item.price * item.quantity, 0)
   })
 
   // Computed property para calcular o total de itens no carrinho

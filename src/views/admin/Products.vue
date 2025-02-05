@@ -14,7 +14,7 @@
                   {{ product.readMore ? '... Ler menos' : '... Ler mais' }}
                 </span>
               </p>
-              <p class="card-text price"><strong>{{ product.price }}</strong></p>
+              <p class="card-text price"><strong>{{ formatPrice(product.price) }}</strong></p>
               <router-link :to="`/admin/products/edit/${product.id}`" class="btn primary">
                 Editar Produto
               </router-link>
@@ -86,6 +86,10 @@ const nextPage = () => {
 
 const goToPage = (page: number) => {
   currentPage.value = page
+}
+
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price)
 }
 
 onMounted(() => {

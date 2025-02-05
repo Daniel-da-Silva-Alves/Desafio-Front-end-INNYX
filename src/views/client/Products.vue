@@ -14,7 +14,7 @@
                   {{ product.readMore ? '... Ler menos' : '... Ler mais' }}
                 </span>
               </p>
-              <p class="card-text price"><strong>{{ product.price }}</strong></p>
+              <p class="card-text price"><strong>{{ formatPrice(product.price) }}</strong></p>
               <button @click="addToCart(product)" class="btn primary">
                 Adicionar ao carrinho
               </button>
@@ -93,6 +93,10 @@ const goToPage = (page: number) => {
 
 const addToCart = (product: Product) => {
   cartStore.addToCart(product)
+}
+
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price)
 }
 
 onMounted(() => {

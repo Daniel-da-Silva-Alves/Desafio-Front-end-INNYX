@@ -11,12 +11,22 @@
               <div class="card-body">
                 <h5 class="card-title">{{ item.name }}</h5>
                 <p class="card-text">Quantidade: {{ item.quantity }}</p>
-                <p class="card-text">Preço: R$ {{ (parseFloat(item.price) * item.quantity).toFixed(2) }}</p>
+                <p class="card-text">Preço: {{ formatPrice(item.price * item.quantity) }}</p>
               </div>
             </div>
           </div>
         </div>
-
+        
+        <div class="cart-total">
+          <h3>Total: {{ formatPrice(cartStore.total) }}</h3>
+        </div>
+        
+        <div class="checkout-button">
+          <button @click="finalizePurchase" class="btn primary">
+            Finalizar compra
+          </button>
+        </div>
+        
         <nav aria-label="Page navigation example" class="mt-4">
           <ul class="pagination justify-content-center">
             <li class="page-item" :class="{ disabled: currentPage === 1 }">
@@ -30,17 +40,6 @@
             </li>
           </ul>
         </nav>
-        
-        <div class="cart-total">
-          <h3>Total: R$ {{ cartStore.total.toFixed(2) }}</h3>
-        </div>
-        
-        <div class="checkout-button">
-          <button @click="finalizePurchase" class="btn primary">
-            Finalizar compra
-          </button>
-        </div>
-
       </div>
       <p v-else>Seu carrinho está vazio.</p>
     </div>
@@ -81,6 +80,10 @@ const nextPage = () => {
 
 const goToPage = (page: number) => {
   currentPage.value = page
+}
+
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price)
 }
 
 function finalizePurchase() {

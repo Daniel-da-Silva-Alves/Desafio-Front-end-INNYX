@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 export interface Product {
   id: number
   name: string
-  price: string // Alterado para string para armazenar o valor formatado como moeda
+  price: number // Alterado para number para armazenar o valor como número
   description: string
   image: string
 }
@@ -28,7 +28,7 @@ export const useProductStore = defineStore('productStore', {
         id: Date.now(), // Gera um ID único baseado no timestamp atual
         name: product.name,
         description: product.description,
-        price: product.price, // Armazena o valor formatado como moeda
+        price: product.price, // Armazena o valor como número
         image: product.image
       })
       this.saveToLocalStorage() // Salva a lista atualizada no localStorage
