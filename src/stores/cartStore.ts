@@ -10,7 +10,7 @@ interface CartItem extends Product {
 // Definição da store 'cart' usando Pinia
 export const useCartStore = defineStore('cart', () => {
   // Estado inicial da store
-  const items = ref<CartItem[]>([]) // Lista de itens no carrinho, inicializada como um array vazio
+  const items = ref<CartItem[]>(JSON.parse(localStorage.getItem('cartItems') || '[]')) // Carrega os itens do carrinho do localStorage ou inicializa com um array vazio
   
   // Computed property para calcular o total do carrinho
   const total = computed(() => {
@@ -30,6 +30,7 @@ export const useCartStore = defineStore('cart', () => {
     } else {
       items.value.push({ ...product, quantity: 1 }) // Adiciona o produto ao carrinho com quantidade 1
     }
+    saveToLocalStorage() // Salva os itens no localStorage
   }
 
   // Função para remover um produto do carrinho
@@ -38,11 +39,18 @@ export const useCartStore = defineStore('cart', () => {
     if (index !== -1) {
       items.value.splice(index, 1) // Remove o produto do carrinho
     }
+    saveToLocalStorage() // Salva os itens no localStorage
   }
 
   // Função para limpar o carrinho
   function clearCart() {
     items.value = [] // Limpa todos os itens do carrinho
+    saveToLocalStorage() // Salva os itens no localStorage
+  }
+
+  // Função para salvar os itens no localStorage
+  function saveToLocalStorage() {
+    localStorage.setItem('cartItems', JSON.stringify(items.value))
   }
 
   // Retorna as propriedades e funções da store
