@@ -1,7 +1,7 @@
 <template>
   <client-layout>
     <div class="checkout">
-      <h2>Produtos Selecionados</h2>
+      <h2 class="text-center">Produtos Selecionados</h2>
       
       <div class="cart-items" v-if="paginatedItems.length">
         <div class="products-grid">
@@ -40,6 +40,7 @@
             Finalizar compra
           </button>
         </div>
+
       </div>
       <p v-else>Seu carrinho está vazio.</p>
     </div>
@@ -92,6 +93,10 @@ function finalizePurchase() {
 <style lang="scss" scoped>
 .checkout {
   padding: 2rem;
+
+  .text-center {
+    text-align: center;
+  }
 
   .cart-items {
     margin-top: 2rem;
