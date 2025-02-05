@@ -35,12 +35,24 @@
 
         <div class="form-group">
           <label for="image">Imagem do produto</label>
-          <input
-            type="file"
-            id="image"
-            @change="handleFileChange"
-            required
-          />
+          <div class="file-input-container">
+            <button class="choose-file-btn" @click="triggerFileInput">Escolher arquivo</button>
+            <input
+              type="file"
+              id="image"
+              @change="handleFileChange"
+              ref="fileInput"
+              style="display: none;"
+              required
+            />
+            <input
+              type="text"
+              v-model="product.image"
+              placeholder="URL da imagem"
+              readonly
+              class="image-url"
+            />
+          </div>
         </div>
 
         <button type="submit" class="btn primary">Adicionar produto</button>
@@ -66,6 +78,7 @@ const product = ref({
 })
 
 const formattedPrice = ref('')
+const fileInput = ref<HTMLInputElement | null>(null)
 
 const formatPrice = (event: Event) => {
   const input = event.target as HTMLInputElement
@@ -78,15 +91,8 @@ const formatPrice = (event: Event) => {
 const handleFileChange = (event: Event) => {
   const file = (event.target as HTMLInputElement).files?.[0]
   if (file) {
-    uploadImage(file)
+    product.value.image = URL.createObjectURL(file) // Atualiza a URL da imagem
   }
-}
-
-const uploadImage = async (file: File) => {
-  // Implementar lógica de upload de imagem
-  // Exemplo: upload para um serviço de armazenamento e obter a URL da imagem
-  const imageUrl = await fakeUploadService(file)
-  product.value.image = imageUrl
 }
 
 const handleSubmit = () => {
@@ -94,13 +100,8 @@ const handleSubmit = () => {
   router.push('/admin/products')
 }
 
-// Função de upload fictícia para fins de exemplo
-const fakeUploadService = async (file: File) => {
-  return new Promise<string>((resolve) => {
-    setTimeout(() => {
-      resolve(URL.createObjectURL(file))
-    }, 1000)
-  })
+const triggerFileInput = () => {
+  fileInput.value?.click()
 }
 </script>
 
@@ -162,6 +163,38 @@ const fakeUploadService = async (file: File) => {
 
   .btn.primary:hover {
     filter: brightness(0.9); // Ajusta o brilho para escurecer a cor
+  }
+
+  .file-input-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .choose-file-btn {
+    padding: 0.5rem;
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    cursor: pointer;
+    height: 100%; /* Garante que o botão tenha a mesma altura do campo de texto */
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .choose-file-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .image-url {
+    flex: 1; /* Faz o campo de texto ocupar o espaço restante */
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    cursor: not-allowed; /* Indica que o campo é somente leitura */
+    height: 100%; /* Garante que o campo de texto tenha a mesma altura do botão */
   }
 }
 </style>
