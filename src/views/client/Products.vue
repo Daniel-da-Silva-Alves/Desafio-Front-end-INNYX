@@ -1,7 +1,7 @@
 <template>
   <client-layout>
     <div class="products-client">
-      <h2>Catálogo</h2>
+      <h2 class="catalog-header">Catálogo</h2>
       <div class="products-grid">
         <div v-for="product in paginatedProducts" :key="product.id" class="product-card">
           <div class="card">
@@ -14,10 +14,10 @@
                   {{ product.readMore ? '... Ler menos' : '... Ler mais' }}
                 </span>
               </p>
-              <p class="card-text"><strong>{{ product.price }}</strong></p>
-              <button @click="cartStore.addToCart(product)" class="btn btn-primary">
-                Add to Cart
-              </button>
+              <p class="card-text price"><strong>{{ product.price }}</strong></p>
+              <Button @click="cartStore.addToCart(product)" class="btn primary">
+                Adicionar ao carrinho
+              </Button>
             </div>
           </div>
         </div>
@@ -44,6 +44,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useProductStore } from '@/stores/productStore'
 import { useCartStore } from '@/stores/cartStore'
 import ClientLayout from '@/layouts/ClientLayout.vue'
+import Button from '@/components/common/Button.vue'
 
 const productStore = useProductStore()
 const cartStore = useCartStore()
@@ -103,11 +104,16 @@ onMounted(() => {
   align-items: center;
 }
 
+.catalog-header {
+  margin-bottom: 3rem; /* Ajuste a margem inferior para controlar a distância */
+}
+
 .products-grid {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
   justify-content: center; /* Centraliza os cartões */
+  margin-bottom: 1rem; /* Ajuste a margem inferior para controlar a distância */
 }
 
 .product-card {
@@ -141,6 +147,10 @@ onMounted(() => {
   text-overflow: ellipsis;
 }
 
+.price {
+  color: var(--primary-color); /* Define a cor do preço */
+}
+
 .read-more {
   color: blue;
   cursor: pointer;
@@ -149,5 +159,40 @@ onMounted(() => {
 
 .pagination {
   margin-top: 1rem;
+}
+
+.page-item.active .page-link {
+  background-color: var(--primary-color); /* Define a cor de fundo da página ativa */
+  border-color: var(--primary-color); /* Define a cor da borda da página ativa */
+  color: white; /* Define a cor do texto da página ativa */
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn.primary {
+  color: #fff;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn.primary:hover {
+  color: #fff;
+  background-color: #5a2d82; /* Ajuste a cor de fundo para um tom mais escuro */
+  border-color: #5a2d82; /* Ajuste a cor da borda para um tom mais escuro */
 }
 </style>
