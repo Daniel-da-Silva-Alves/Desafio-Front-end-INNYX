@@ -33,7 +33,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
               <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Configurações</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Sair</a></li>
+              <li><a class="dropdown-item" href="/"><i class="bi bi-box-arrow-right me-2"></i>Sair</a></li>
             </ul>
           </div>
         </div>
