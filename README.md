@@ -2,7 +2,7 @@
 
 Este projeto é um desafio de front-end utilizando Vue 3 e TypeScript, com Vite para build e Pinia para gerenciamento de estado e para o local storage.
 
-Obs*: as imagens para adiconar aos produtos estão dentro da pasta "dados-produto".
+Obs*: as imagens para adicionar aos produtos estão dentro da pasta "dados-produto".
 
 ## 📥 Configuração e Execução
 
