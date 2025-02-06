@@ -1,10 +1,14 @@
 <template>
   <client-layout>
     <div class="checkout">
+      <!-- Título da seção de produtos selecionados -->
       <h2 class="text-center">Produtos Selecionados</h2>
       
+      <!-- Verifica se há itens paginados no carrinho -->
       <div class="cart-items" v-if="paginatedItems.length">
+        <!-- Grid de produtos -->
         <div class="products-grid">
+          <!-- Itera sobre os itens paginados e exibe cada um em um cartão -->
           <div v-for="item in paginatedItems" :key="item.id" class="product-card">
             <div class="card">
               <img :src="item.image" class="card-img-top" :alt="item.name">
@@ -17,16 +21,19 @@
           </div>
         </div>
         
+        <!-- Total do carrinho -->
         <div class="cart-total">
           <h3>Total: {{ formatPrice(cartStore.total) }}</h3>
         </div>
         
+        <!-- Botão para finalizar a compra -->
         <div class="checkout-button">
           <button @click="finalizePurchase" class="btn primary">
             Finalizar compra
           </button>
         </div>
         
+        <!-- Navegação de paginação -->
         <nav aria-label="Page navigation example" class="mt-4">
           <ul class="pagination justify-content-center">
             <li class="page-item" :class="{ disabled: currentPage === 1 }">
@@ -41,7 +48,9 @@
           </ul>
         </nav>
       </div>
-      <p v-else>Seu carrinho está vazio.</p>
+      
+      <!-- Mensagem exibida quando o carrinho está vazio -->
+      <p v-else class="text-center mt-4">Seu carrinho está vazio.</p>
     </div>
   </client-layout>
 </template>
@@ -52,40 +61,49 @@ import { useCartStore } from '@/stores/cartStore'
 import { useRouter } from 'vue-router'
 import ClientLayout from '@/layouts/ClientLayout.vue'
 
+// Inicializa a store do carrinho e o roteador
 const cartStore = useCartStore()
 const router = useRouter()
 
+// Referências reativas para a página atual e o número de itens por página
 const currentPage = ref(1)
 const itemsPerPage = 3
 
+// Computed property para calcular o número total de páginas
 const totalPages = computed(() => Math.ceil(cartStore.items.length / itemsPerPage))
 
+// Computed property para obter os itens paginados
 const paginatedItems = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
   const end = start + itemsPerPage
   return cartStore.items.slice(start, end)
 })
 
+// Função para navegar para a página anterior
 const prevPage = () => {
   if (currentPage.value > 1) {
     currentPage.value--
   }
 }
 
+// Função para navegar para a próxima página
 const nextPage = () => {
   if (currentPage.value < totalPages.value) {
     currentPage.value++
   }
 }
 
+// Função para navegar para uma página específica
 const goToPage = (page: number) => {
   currentPage.value = page
 }
 
+// Função para formatar o preço no formato de moeda brasileira
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price)
 }
 
+// Função para finalizar a compra
 function finalizePurchase() {
   alert('Compra finalizada!')
   cartStore.clearCart()

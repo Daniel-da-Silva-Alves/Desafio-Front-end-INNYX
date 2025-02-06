@@ -1,8 +1,12 @@
 <template>
   <admin-layout>
     <div class="products-admin">
+      <!-- Cabeçalho da lista de produtos -->
       <h2 class="catalog-header">Lista de Produtos</h2>
+      
+      <!-- Grid de produtos -->
       <div class="products-grid">
+        <!-- Itera sobre os produtos paginados e exibe cada um em um cartão -->
         <div v-for="product in paginatedProducts" :key="product.id" class="product-card">
           <div class="card">
             <img :src="product.image" class="card-img-top" :alt="product.name">
@@ -22,6 +26,8 @@
           </div>
         </div>
       </div>
+      
+      <!-- Navegação de paginação -->
       <nav aria-label="Page navigation example" class="mt-4">
         <ul class="pagination justify-content-center">
           <li class="page-item" :class="{ disabled: currentPage === 1 }">
@@ -44,14 +50,18 @@ import { ref, computed, onMounted } from 'vue'
 import { useProductStore } from '@/stores/productStore'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 
+// Inicializa a store de produtos
 const productStore = useProductStore()
 
+// Referências reativas para a página atual e o número de produtos por página
 const currentPage = ref(1)
 const productsPerPage = 3
 const maxDescriptionLength = 100
 
+// Computed property para calcular o número total de páginas
 const totalPages = computed(() => Math.ceil(productStore.products.length / productsPerPage))
 
+// Computed property para obter os produtos paginados
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * productsPerPage
   const end = start + productsPerPage
@@ -61,10 +71,12 @@ const paginatedProducts = computed(() => {
   }))
 })
 
+// Função para truncar a descrição do produto
 const truncatedDescription = (description: string) => {
   return description.length > maxDescriptionLength ? description.slice(0, maxDescriptionLength) : description
 }
 
+// Função para alternar entre expandir e contrair a descrição do produto
 const toggleReadMore = (productId: number) => {
   const product = paginatedProducts.value.find(p => p.id === productId)
   if (product) {
@@ -72,6 +84,7 @@ const toggleReadMore = (productId: number) => {
   }
 }
 
+// Funções para navegação entre as páginas
 const prevPage = () => {
   if (currentPage.value > 1) {
     currentPage.value--
@@ -88,10 +101,12 @@ const goToPage = (page: number) => {
   currentPage.value = page
 }
 
+// Função para formatar o preço do produto
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price)
 }
 
+// Lifecycle hook para carregar os produtos quando o componente é montado
 onMounted(() => {
   productStore.getProducts()
 })

@@ -1,0 +1,21 @@
+Adicionar os seguintes produtos
+
+Nome produto: Guarda-Roupa Elegant 4 Portas
+Descrição: Amplo, moderno e resistente.
+Preço: R$ 799,90
+
+Bicicleta Speed Rider Vermelha 
+Descrição: Leve, veloz e com 21 marchas.
+Preço: R$ 1.499,90
+
+Headphone SonicBass Pro 
+Descrição: Bluetooth, som HD e cancelamento de ruído.
+Preço: R$ 349,90
+
+Torradeira ToastMaster Duo 
+Descrição: 6 níveis, bandeja removível e compacta.
+Preço: R$ 179,90
+
+Fogão MasterCook 5 Bocas
+Descrição: 5 bocas, acendimento automático e forno grande.
+Preço: R$ 1.299,90

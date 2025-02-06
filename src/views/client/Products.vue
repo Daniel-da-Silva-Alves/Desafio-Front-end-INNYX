@@ -1,27 +1,38 @@
 <template>
   <client-layout>
     <div class="products-client">
+      <!-- Cabeçalho da lista de produtos -->
       <h2 class="catalog-header">Produtos Innyx</h2>
+      
+      <!-- Grid de produtos -->
       <div class="products-grid">
-        <div v-for="product in paginatedProducts" :key="product.id" class="product-card">
-          <div class="card">
-            <img :src="product.image" class="card-img-top" :alt="product.name">
-            <div class="card-body">
-              <h5 class="card-title">{{ product.name }}</h5>
-              <p class="card-text">
-                {{ truncatedDescription(product.description) }}
-                <span v-if="product.description.length > maxDescriptionLength" @click="toggleReadMore(product.id)" class="read-more">
-                  {{ product.readMore ? '... Ler menos' : '... Ler mais' }}
-                </span>
-              </p>
-              <p class="card-text price"><strong>{{ formatPrice(product.price) }}</strong></p>
-              <button @click="addToCart(product)" class="btn primary">
-                Adicionar ao carrinho
-              </button>
+        <!-- Verifica se há produtos paginados -->
+        <div v-if="paginatedProducts.length">
+          <!-- Itera sobre os produtos paginados e exibe cada um em um cartão -->
+          <div v-for="product in paginatedProducts" :key="product.id" class="product-card">
+            <div class="card">
+              <img :src="product.image" class="card-img-top" :alt="product.name">
+              <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">
+                  {{ truncatedDescription(product.description) }}
+                  <span v-if="product.description.length > maxDescriptionLength" @click="toggleReadMore(product.id)" class="read-more">
+                    {{ product.readMore ? '... Ler menos' : '... Ler mais' }}
+                  </span>
+                </p>
+                <p class="card-text price"><strong>{{ formatPrice(product.price) }}</strong></p>
+                <button @click="addToCart(product)" class="btn primary">
+                  Adicionar ao carrinho
+                </button>
+              </div>
             </div>
           </div>
         </div>
+        <!-- Mensagem exibida quando não há produtos -->
+        <p v-else class="text-center mt-4">Não adicionamos produtos ainda.</p>
       </div>
+      
+      <!-- Navegação de paginação -->
       <nav aria-label="Page navigation example" class="mt-4">
         <ul class="pagination justify-content-center">
           <li class="page-item" :class="{ disabled: currentPage === 1 }">
@@ -40,34 +51,48 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useProductStore } from '@/stores/productStore'
 import { useCartStore } from '@/stores/cartStore'
 import type { Product } from '@/stores/productStore'
 import ClientLayout from '@/layouts/ClientLayout.vue'
 
+// Inicializa a store de produtos e a store do carrinho
 const productStore = useProductStore()
 const cartStore = useCartStore()
+const route = useRoute()
 
+// Referências reativas para a página atual e o número de produtos por página
 const currentPage = ref(1)
 const productsPerPage = 3
 const maxDescriptionLength = 100
 
-const totalPages = computed(() => Math.ceil(productStore.products.length / productsPerPage))
+// Computed property para calcular o número total de páginas
+const totalPages = computed(() => Math.ceil(filteredProducts.value.length / productsPerPage))
 
+// Computed property para obter os produtos paginados
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * productsPerPage
   const end = start + productsPerPage
-  return productStore.products.slice(start, end).map(product => ({
+  return filteredProducts.value.slice(start, end).map(product => ({
     ...product,
     readMore: false
   }))
 })
 
+// Computed property para filtrar os produtos com base na query de busca
+const filteredProducts = computed(() => {
+  const searchQuery = route.query.search?.toString().toLowerCase() || ''
+  return productStore.searchProducts(searchQuery)
+})
+
+// Função para truncar a descrição do produto
 const truncatedDescription = (description: string) => {
   return description.length > maxDescriptionLength ? description.slice(0, maxDescriptionLength) : description
 }
 
+// Função para alternar entre expandir e contrair a descrição do produto
 const toggleReadMore = (productId: number) => {
   const product = paginatedProducts.value.find(p => p.id === productId)
   if (product) {
@@ -75,6 +100,7 @@ const toggleReadMore = (productId: number) => {
   }
 }
 
+// Funções para navegação entre as páginas
 const prevPage = () => {
   if (currentPage.value > 1) {
     currentPage.value--
@@ -91,16 +117,24 @@ const goToPage = (page: number) => {
   currentPage.value = page
 }
 
+// Função para adicionar um produto ao carrinho
 const addToCart = (product: Product) => {
   cartStore.addToCart(product)
 }
 
+// Função para formatar o preço do produto
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price)
 }
 
+// Lifecycle hook para carregar os produtos quando o componente é montado
 onMounted(() => {
   productStore.getProducts()
+})
+
+// Watcher para redefinir a página atual quando a rota mudar
+watch(route, () => {
+  currentPage.value = 1
 })
 </script>
 
@@ -118,16 +152,15 @@ onMounted(() => {
 
 .products-grid {
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-wrap: wrap; /* Permite que os cartões sejam exibidos em várias linhas */
   justify-content: center; /* Centraliza os cartões */
+  gap: 1rem; /* Adiciona um espaço entre os cartões */
   margin-bottom: 1rem; /* Ajuste a margem inferior para controlar a distância */
 }
 
 .product-card {
   flex: 0 0 auto;
   width: 250px;
-  margin-right: 1rem;
 }
 
 .card {

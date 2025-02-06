@@ -1,8 +1,11 @@
 <template>
   <admin-layout>
     <div class="add-product">
+      <!-- Formulário para adicionar um novo produto -->
       <form @submit.prevent="handleSubmit" class="form-container">
         <h2>Novo Produto</h2>
+        
+        <!-- Campo para o nome do produto -->
         <div class="form-group">
           <label for="name">Nome do produto</label>
           <input
@@ -13,6 +16,7 @@
           />
         </div>
         
+        <!-- Campo para o preço do produto -->
         <div class="form-group">
           <label for="price">Preço</label>
           <input
@@ -24,6 +28,7 @@
           />
         </div>
 
+        <!-- Campo para a descrição do produto -->
         <div class="form-group">
           <label for="description">Descrição</label>
           <textarea
@@ -33,6 +38,7 @@
           ></textarea>
         </div>
 
+        <!-- Campo para a imagem do produto -->
         <div class="form-group">
           <label for="image">Imagem do produto</label>
           <div class="file-input-container">
@@ -55,6 +61,7 @@
           </div>
         </div>
 
+        <!-- Botão para adicionar o produto -->
         <button type="submit" class="btn primary">Adicionar produto</button>
       </form>
     </div>
@@ -67,9 +74,11 @@ import { useRouter } from 'vue-router'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import { useProductStore } from '@/stores/productStore'
 
+// Inicializa o roteador e a store de produtos
 const router = useRouter()
 const productStore = useProductStore()
 
+// Referência reativa para o novo produto
 const product = ref({
   name: '',
   price: 0, // Alterado para number
@@ -77,9 +86,12 @@ const product = ref({
   image: ''
 })
 
+// Referência reativa para o preço formatado
 const formattedPrice = ref('')
+// Referência para o input de arquivo
 const fileInput = ref<HTMLInputElement | null>(null)
 
+// Função para formatar o preço no formato de moeda brasileira
 const formatPrice = (event: Event) => {
   const input = event.target as HTMLInputElement
   let value = input.value.replace(/\D/g, '')
@@ -88,6 +100,7 @@ const formatPrice = (event: Event) => {
   product.value.price = parseFloat(value) // Armazena o valor como número
 }
 
+// Função para lidar com a mudança de arquivo
 const handleFileChange = (event: Event) => {
   const file = (event.target as HTMLInputElement).files?.[0]
   if (file) {
@@ -95,11 +108,13 @@ const handleFileChange = (event: Event) => {
   }
 }
 
+// Função para enviar o formulário
 const handleSubmit = () => {
   productStore.addProduct(product.value)
   router.push('/admin/products')
 }
 
+// Função para disparar o input de arquivo
 const triggerFileInput = () => {
   fileInput.value?.click()
 }

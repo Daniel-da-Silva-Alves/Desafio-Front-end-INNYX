@@ -53,6 +53,8 @@
               type="text"
               class="form-control"
               placeholder="Buscar produtos..."
+              v-model="searchQuery"
+              @keyup.enter="searchProducts"
             >
           </div>
           <!-- Carrinho -->
@@ -83,14 +85,32 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useCartStore } from '@/stores/cartStore'
 
+// Inicializa a store do carrinho
 const cartStore = useCartStore()
 
+// Inicializa o roteador
+const router = useRouter()
+
+// Define uma referência reativa para a query de busca
+const searchQuery = ref('')
+
+// Computed property para calcular o total de itens no carrinho
 const totalItems = computed(() => {
   return cartStore.totalItems
 })
+
+// Função para realizar a busca de produtos
+const searchProducts = () => {
+  // Verifica se a query de busca não está vazia
+  if (searchQuery.value.trim()) {
+    // Redireciona para a rota de produtos com a query de busca
+    router.push({ name: 'Products', query: { search: searchQuery.value } })
+  }
+}
 </script>
 
 <style lang="scss" scoped>

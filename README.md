@@ -1,5 +1,26 @@
-# Vue 3 + TypeScript + Vite
+# 🚀 Desafio de Front-end INNYX
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Este projeto é um desafio de front-end utilizando Vue 3 e TypeScript, com Vite para build e Pinia para gerenciamento de estado e para o local storage.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+Obs*: as imagens para adiconar aos produtos estão dentro da pasta "dados-produto".
+
+## 📥 Configuração e Execução
+
+### 1️⃣ Clonar o repositório
+```sh
+git clone https://github.com/seu-usuario/seu-repositorio.git
+cd seu-repositorio
+```
+
+### 2️⃣ Instalar dependências
+```sh
+npm install
+```
+
+### 3️⃣ Executar o projeto
+```sh
+npm run dev
+```
+
+Acesse `http://localhost:5173/` no navegador para visualizar a aplicação em execução.
+
