@@ -108,7 +108,7 @@ const searchProducts = () => {
   // Verifica se a query de busca não está vazia
   if (searchQuery.value.trim()) {
     // Redireciona para a rota de produtos com a query de busca
-    router.push({ name: 'Products', query: { search: searchQuery.value } })
+    router.push({ name: 'ClientProducts', query: { search: searchQuery.value } })
   }
 }
 </script>

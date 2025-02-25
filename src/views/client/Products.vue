@@ -6,8 +6,7 @@
       
       <!-- Grid de produtos -->
       <div class="products-grid">
-        <!-- Verifica se há produtos paginados -->
-        <div v-if="paginatedProducts.length">
+        <template v-if="paginatedProducts.length">
           <!-- Itera sobre os produtos paginados e exibe cada um em um cartão -->
           <div v-for="product in paginatedProducts" :key="product.id" class="product-card">
             <div class="card">
@@ -16,7 +15,8 @@
                 <h5 class="card-title">{{ product.name }}</h5>
                 <p class="card-text">
                   {{ truncatedDescription(product.description) }}
-                  <span v-if="product.description.length > maxDescriptionLength" @click="toggleReadMore(product.id)" class="read-more">
+                  <span v-if="product.description.length > maxDescriptionLength"
+                        @click="toggleReadMore(product.id)" class="read-more">
                     {{ product.readMore ? '... Ler menos' : '... Ler mais' }}
                   </span>
                 </p>
@@ -27,9 +27,11 @@
               </div>
             </div>
           </div>
-        </div>
-        <!-- Mensagem exibida quando não há produtos -->
-        <p v-else class="text-center mt-4">Não adicionamos produtos ainda.</p>
+        </template>
+        <template v-else>
+          <!-- Mensagem exibida quando não há produtos -->
+          <p class="text-center mt-4">Não adicionamos produtos ainda.</p>
+        </template>
       </div>
       
       <!-- Navegação de paginação -->
@@ -152,15 +154,16 @@ watch(route, () => {
 
 .products-grid {
   display: flex;
-  flex-wrap: wrap; /* Permite que os cartões sejam exibidos em várias linhas */
+  flex-wrap: nowrap;
+  overflow-x: auto;
   justify-content: center; /* Centraliza os cartões */
-  gap: 1rem; /* Adiciona um espaço entre os cartões */
   margin-bottom: 1rem; /* Ajuste a margem inferior para controlar a distância */
 }
 
 .product-card {
   flex: 0 0 auto;
   width: 250px;
+  margin-right: 1rem;
 }
 
 .card {
